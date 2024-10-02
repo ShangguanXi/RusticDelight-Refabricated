@@ -43,7 +43,6 @@ public class BlockRegister {
         return block;
     }
     public static void initialize(){
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), WILD_BELL_PEPPER, WILD_COTTON, COTTON, BELL_PEPPER);
 
     }
 }
