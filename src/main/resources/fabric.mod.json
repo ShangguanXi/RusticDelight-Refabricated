@@ -12,6 +12,9 @@
 	"entrypoints": {
 		"main": [
 			"com.rusticdelight.RusticDelight"
+		],
+		"client": [
+			"com.rusticdelight.client.RusticDelightClient"
 		]
 	},
 	"depends": {
