@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "tag": "c:foods/vegetables/potato"
+    },
+    {
+      "tag": "c:foods/vegetables/onion"
+    },
+    {
+      "tag": "c:milks"
+    },
+    {
+      "tag": "c:eggs"
+    }
+  ],
+  "result": {
+    "item": "rusticdelight:potato_salad"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "rusticdelight:batter"
+    },
+    "L": {
+      "tag": "c:salad_ingredients"
+    },
+    "V": {
+      "tag": "c:foods/vegetables"
+    },
+    "Y": {
+      "item": "minecraft:bowl"
+    }
+  },
+  "pattern": [
+    "LVL",
+    "VBV",
+    "LYL"
+  ],
+  "result": {
+    "item": "rusticdelight:vegetable_pancakes"
+  },
+  "show_notification": true
+}

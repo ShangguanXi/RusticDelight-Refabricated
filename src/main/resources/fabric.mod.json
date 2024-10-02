@@ -1,0 +1,26 @@
+{
+	"schemaVersion": 1,
+	"id": "rusticdelightrefabricated",
+	"version": "${version}",
+	"name": "RusticDelight:Refabricated",
+	"description": "This Mod is ported based on the original Forge mod Rustic Delight and this work is licensed under the MIT License.",
+	"authors": [
+		"Moaswies"
+	],
+	"icon": "assets/rusticdelight/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.rusticdelight.RusticDelight"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.16.5",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
