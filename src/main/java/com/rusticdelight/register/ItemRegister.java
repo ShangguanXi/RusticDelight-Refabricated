@@ -1,27 +1,23 @@
 package com.rusticdelight.register;
 
 import com.rusticdelight.items.RusticFoodComponents;
-import net.minecraft.block.Block;
 import net.minecraft.item.AliasedBlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 import vectorwing.farmersdelight.common.item.DrinkableItem;
 
-import java.util.ArrayList;
-import java.util.List;
+import static com.rusticdelight.RusticDelight.makeId;
+import static com.rusticdelight.register.ItemGroupRegister.RUSTIC_DELIGHT_GROUP;
 
 public class ItemRegister {
-    public static final List<Item> registeredItems = new ArrayList<>();
     public static final Item COTTON_BOLL = register("cotton_boll", new Item(new Item.Settings()));
     public static final Item BELL_PEPPER_RED = register("bell_pepper_red", new Item(new Item.Settings().food(RusticFoodComponents.BELL_PEPPER)));
     public static final Item BELL_PEPPER_GREEN = register("bell_pepper_green", new Item(new Item.Settings().food(RusticFoodComponents.BELL_PEPPER)));
     public static final Item BELL_PEPPER_YELLOW = register("bell_pepper_yellow", new Item(new Item.Settings().food(RusticFoodComponents.BELL_PEPPER)));
     //seed
-    public static final Item COTTON_SEEDS = register("cotton_seeds",new AliasedBlockItem(BlockRegister.COTTON,new Item.Settings()));
-    public static final Item BELL_PEPPER_SEEDS = register("bell_pepper_seeds",new AliasedBlockItem(BlockRegister.BELL_PEPPER,new Item.Settings()));
+    public static final Item COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(BlockRegister.COTTON, new Item.Settings()));
+    public static final Item BELL_PEPPER_SEEDS = register("bell_pepper_seeds", new AliasedBlockItem(BlockRegister.BELL_PEPPER, new Item.Settings()));
     //food
     public static final Item CALAMARI = register("calamari", new Item(new Item.Settings().food(RusticFoodComponents.CALAMARI)));
     public static final Item COOKED_CALAMARI = register("cooked_calamari", new Item(new Item.Settings().food(RusticFoodComponents.COOKED_CALAMARI)));
@@ -51,11 +47,8 @@ public class ItemRegister {
 
 
     public static <T extends Item> T register(String path, T item) {
-        registeredItems.add(item);
-        return Registry.register(Registries.ITEM, new Identifier("rusticdelight", path), item);
+        return RUSTIC_DELIGHT_GROUP.register(Registries.ITEM, makeId(path), item);
     }
 
-    public static void initialize() {
-    }
-
+    public static void initialize() {}
 }

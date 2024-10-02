@@ -9,8 +9,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
@@ -26,12 +24,11 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class Pancakes extends Block {
-
+public class PancakeBlock extends Block {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-    public static final Integer MAX_SERVINGS = 5;
-    public static final IntProperty SERVINGS = IntProperty.of("servings", 0, MAX_SERVINGS);
-
+    public static final int MAX_SERVINGS = 6;
+    public static final int MAX_SERVING_INDEX = MAX_SERVINGS - 1;
+    public static final IntProperty SERVINGS = IntProperty.of("servings", 0, MAX_SERVING_INDEX);
     protected static final VoxelShape PLATE_SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 2.0D, 15.0D);
     protected static final VoxelShape[] PANCAKES_SHAPES = new VoxelShape[]{
             VoxelShapes.combine(PLATE_SHAPE, Block.createCuboidShape(3.0D, 2.0D, 3.0D, 13.0D, 8.0D, 13.0D), BooleanBiFunction.OR),
@@ -41,13 +38,13 @@ public class Pancakes extends Block {
             VoxelShapes.combine(PLATE_SHAPE, Block.createCuboidShape(3.0D, 2.0D, 3.0D, 13.0D, 4.0D, 13.0D), BooleanBiFunction.OR),
             VoxelShapes.combine(PLATE_SHAPE, Block.createCuboidShape(3.0D, 2.0D, 3.0D, 13.0D, 3.0D, 13.0D), BooleanBiFunction.OR)
     };
-    private final Integer foodLevels;
-    private final Float saturation;
-    private final StatusEffect statusEffect;
-    private final Integer time;
-    private final Integer amplifier;
+    public final int foodLevels;
+    public final float saturation;
+    public final StatusEffect statusEffect;
+    public final int time;
+    public final int amplifier;
 
-    public Pancakes(Settings settings, Integer foodLevels, Float saturation, StatusEffect statusEffect, Integer time, Integer amplifier) {
+    public PancakeBlock(Settings settings, int foodLevels, float saturation, StatusEffect statusEffect, int time, int amplifier) {
         super(settings);
         this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(getServingsProperty(), 0));
         this.foodLevels = foodLevels;
@@ -62,10 +59,26 @@ public class Pancakes extends Block {
     }
 
     @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(FACING, SERVINGS);
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView level, BlockPos pos, ShapeContext context) {
+        return PANCAKES_SHAPES[state.get(SERVINGS)];
+    }
+
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext context) {
+        // Forge那边没有调用getOpposite()
+        return this.getDefaultState().with(FACING, context.getHorizontalPlayerFacing().getOpposite());
+    }
+
+    @Override
     public ActionResult onUse(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack heldStack = player.getStackInHand(hand);
         if (level.isClient) {
-            if (this.consumeBite(level, pos, state, player) == ActionResult.SUCCESS) {
+            if (this.consumeBite(level, pos, state, player).isAccepted()) {
                 return ActionResult.SUCCESS;
             }
             if (heldStack.isEmpty()) {
@@ -79,32 +92,21 @@ public class Pancakes extends Block {
         if (!playerIn.canConsume(false)) {
             return ActionResult.PASS;
         } else {
-
-            playerIn.getHungerManager().setFoodLevel(playerIn.getHungerManager().getFoodLevel()+foodLevels);
-            playerIn.getHungerManager().setSaturationLevel(playerIn.getHungerManager().getSaturationLevel()+ (saturation*foodLevels*2));
+            var manager = playerIn.getHungerManager();
+            manager.setFoodLevel(Math.min(foodLevels + manager.getFoodLevel(), 20));
+            manager.setSaturationLevel(Math.min(
+                    manager.getSaturationLevel() + (foodLevels << 1) * saturation, // manager.getSaturationLevel() + foodLevels * saturation * 2
+                    manager.getFoodLevel()
+            ));
             playerIn.addStatusEffect(new StatusEffectInstance(statusEffect, time, amplifier));
             int bites = state.get(SERVINGS);
-            if (bites < MAX_SERVINGS) {
+            if (bites < MAX_SERVING_INDEX) {
                 level.setBlockState(pos, state.with(SERVINGS, bites + 1), 5);
             } else {
                 level.removeBlock(pos, false);
             }
-            level.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 0.8F, 0.8F);
             return ActionResult.SUCCESS;
         }
-    }
-
-
-
-
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
-        return this.getDefaultState().with(FACING, context.getHorizontalPlayerFacing().getOpposite());
-    }
-
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING, SERVINGS);
     }
 
     @Override
@@ -124,30 +126,5 @@ public class Pancakes extends Block {
 
     public int getMaxServings() {
         return MAX_SERVINGS;
-    }
-
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView level, BlockPos pos, ShapeContext context) {
-        return PANCAKES_SHAPES[state.get(SERVINGS)];
-    }
-
-    public Integer getFoodLevels() {
-        return foodLevels;
-    }
-
-    public Float getSaturationLevel() {
-        return saturation;
-    }
-
-    public StatusEffect getStatusEffect() {
-        return statusEffect;
-    }
-
-    public Integer getTime() {
-        return time;
-    }
-
-    public Integer getAmplifier() {
-        return amplifier;
     }
 }
