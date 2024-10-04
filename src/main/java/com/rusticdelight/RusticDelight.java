@@ -3,6 +3,7 @@ package com.rusticdelight;
 import com.rusticdelight.register.BlockRegister;
 import com.rusticdelight.register.ItemGroupRegister;
 import com.rusticdelight.register.ItemRegister;
+import com.rusticdelight.register.TradeRegister;
 import com.rusticdelight.worldgen.features.WildCropsFeature;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.registry.Registry;
@@ -33,6 +34,7 @@ public class RusticDelight implements ModInitializer {
         ItemGroupRegister.initialize();
         BlockRegister.initialize();
         ItemRegister.initialize();
+        TradeRegister.initialize();
         WildCropsFeature.initialize();
     }
 }
