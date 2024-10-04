@@ -10,7 +10,7 @@ public class RusticDelightClient implements ClientModInitializer {
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlocks(
                 RenderLayer.getCutout(),
-                BlockRegister.WILD_BELL_PEPPER,
+                BlockRegister.WILD_BELL_PEPPERS,
                 BlockRegister.WILD_COTTON,
                 BlockRegister.COTTON,
                 BlockRegister.BELL_PEPPER

@@ -1,11 +1,20 @@
 package com.rusticdelight.register;
 
 import com.rusticdelight.items.RusticFoodComponents;
+import com.rusticdelight.util.IngredientHelper;
+import it.unimi.dsi.fastutil.objects.Object2FloatMap;
+import net.minecraft.block.ComposterBlock;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.ParrotEntity;
+import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.item.AliasedBlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import vectorwing.farmersdelight.common.item.DrinkableItem;
+
+import java.util.Collections;
 
 import static com.rusticdelight.RusticDelight.makeId;
 import static com.rusticdelight.register.ItemGroupRegister.RUSTIC_DELIGHT_GROUP;
@@ -45,10 +54,57 @@ public class ItemRegister {
     public static final Item FRIED_CHICKEN = register("fried_chicken", new Item(new Item.Settings().food(RusticFoodComponents.FRIED_CHICKEN).recipeRemainder(Items.BOWL).maxCount(16)));
     public static final Item FRIED_MUSHROOMS = register("fried_mushrooms", new Item(new Item.Settings().food(RusticFoodComponents.FRIED_MUSHROOMS).recipeRemainder(Items.BOWL).maxCount(16)));
 
-
     public static <T extends Item> T register(String path, T item) {
         return RUSTIC_DELIGHT_GROUP.register(Registries.ITEM, makeId(path), item);
     }
 
-    public static void initialize() {}
+    public static void initialize() {
+        registerCompostables(ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE);
+        registerAnimalFeeds();
+        /* 可以在访问加宽后让村民能捡乡村乐事的物品
+        var newWantedItems = Sets.newHashSet(
+                BELL_PEPPER_GREEN,
+                BELL_PEPPER_YELLOW,
+                BELL_PEPPER_RED,
+                COTTON_BOLL,
+                BELL_PEPPER_SEEDS,
+                COTTON_SEEDS
+        );
+        newWantedItems.addAll(VillagerEntity.GATHERABLE_ITEMS);
+        VillagerEntity.GATHERABLE_ITEMS = ImmutableSet.copyOf(newWantedItems);*/
+    }
+
+    public static void registerCompostables(Object2FloatMap<ItemConvertible> compostables) {
+        // 30% chance
+        compostables.put(COTTON_SEEDS, 0.3f);
+        compostables.put(BELL_PEPPER_SEEDS, 0.3f);
+        // 50% chance
+        compostables.put(COTTON_BOLL, 0.5f);
+        compostables.put(POTATO_SLICES, 0.5f);
+        // 65% chance
+        compostables.put(BELL_PEPPER_GREEN, 0.65f);
+        compostables.put(BELL_PEPPER_YELLOW, 0.65f);
+        compostables.put(BELL_PEPPER_RED, 0.65f);
+        compostables.put(BlockRegister.WILD_COTTON, 0.65f);
+        compostables.put(BlockRegister.WILD_BELL_PEPPERS, 0.65f);
+    }
+
+    public static void registerAnimalFeeds() {
+        ChickenEntity.BREEDING_INGREDIENT = IngredientHelper.addAll(
+                ChickenEntity.BREEDING_INGREDIENT,
+                COTTON_SEEDS,
+                BELL_PEPPER_SEEDS
+        );
+        PigEntity.BREEDING_INGREDIENT = IngredientHelper.addAll(
+                PigEntity.BREEDING_INGREDIENT,
+                BELL_PEPPER_GREEN,
+                BELL_PEPPER_YELLOW,
+                BELL_PEPPER_RED
+        );
+        Collections.addAll(
+                ParrotEntity.TAMING_INGREDIENTS,
+                COTTON_SEEDS,
+                BELL_PEPPER_SEEDS
+        );
+    }
 }

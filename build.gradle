@@ -50,7 +50,6 @@ dependencies {
 	modImplementation("vectorwing:FarmersDelight:${fdrf_version}") {
 		exclude(group: "net.fabricmc")
 	}
-	
 }
 
 processResources {
@@ -77,7 +76,7 @@ java {
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
+		rename { "${it}_${project.base.archivesName.get()}" }
 	}
 }
 
@@ -97,4 +96,8 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/rusticdelight-refabricated.accesswidener")
 }

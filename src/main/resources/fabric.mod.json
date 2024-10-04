@@ -9,6 +9,7 @@
 	],
 	"icon": "assets/rusticdelight/icon.png",
 	"environment": "*",
+	"accessWidener": "rusticdelight-refabricated.accesswidener",
 	"entrypoints": {
 		"main": [
 			"com.rusticdelight.RusticDelight"
