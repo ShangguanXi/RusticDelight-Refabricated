@@ -15,8 +15,7 @@ public class WildCropsFeature {
     public static final RegistryKey<PlacedFeature> WILD_COTTON_PLACED = makeKey(RegistryKeys.PLACED_FEATURE, "wild_cotton_placed");
 
     public static void initialize() {
-        var selectors = BiomeSelectors.tag(BiomeTags.IS_JUNGLE);
-        BiomeModifications.addFeature(selectors, GenerationStep.Feature.VEGETAL_DECORATION, WILD_BELL_PEPPERS_PLACED);
-        BiomeModifications.addFeature(selectors, GenerationStep.Feature.VEGETAL_DECORATION, WILD_COTTON_PLACED);
+        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_JUNGLE), GenerationStep.Feature.VEGETAL_DECORATION, WILD_BELL_PEPPERS_PLACED);
+        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_FOREST), GenerationStep.Feature.VEGETAL_DECORATION, WILD_COTTON_PLACED);
     }
 }
