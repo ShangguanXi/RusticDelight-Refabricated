@@ -33,7 +33,7 @@ public class TradeRegister {
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.FISHERMAN, 2, (trades) -> {
             trades.add(sellForOneEmeraldTrade(ItemRegister.CALAMARI, 15, 1, 16));
         });
-        TradeOfferHelper.registerWanderingTraderOffers(0,(trades) -> {
+        TradeOfferHelper.registerWanderingTraderOffers(1,(trades) -> {
             trades.add(sellForEmeraldTrade(ItemRegister.COTTON_SEEDS,  2, 16));
             trades.add(sellForEmeraldTrade(ItemRegister.BELL_PEPPER_SEEDS,  2, 16));
         });
