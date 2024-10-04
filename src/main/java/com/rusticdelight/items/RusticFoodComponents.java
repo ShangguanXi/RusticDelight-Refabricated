@@ -4,10 +4,9 @@ package com.rusticdelight.items;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
-import net.minecraft.item.FoodComponents;
 import vectorwing.farmersdelight.common.registry.ModEffects;
 
-public class RusticFoodComponents extends FoodComponents {
+public class RusticFoodComponents {
     public static final FoodComponent BELL_PEPPER = (new FoodComponent.Builder()).hunger(1).saturationModifier(0.1F).build();
     public static final FoodComponent CALAMARI = (new FoodComponent.Builder()).hunger(3).saturationModifier(0.3F).build();
     public static final FoodComponent COOKED_CALAMARI = (new FoodComponent.Builder()).hunger(5).saturationModifier(0.6F).build();
@@ -30,5 +29,4 @@ public class RusticFoodComponents extends FoodComponents {
     public static final FoodComponent FRIED_CALAMARI = (new FoodComponent.Builder()).hunger(12).saturationModifier(0.8F).statusEffect(new StatusEffectInstance(ModEffects.NOURISHMENT.get(), 3600, 0), 1F).build();
     public static final FoodComponent FRIED_CHICKEN = (new FoodComponent.Builder()).hunger(12).saturationModifier(0.8F).statusEffect(new StatusEffectInstance(ModEffects.NOURISHMENT.get(), 3600, 0), 1F).build();
     public static final FoodComponent FRIED_MUSHROOMS = (new FoodComponent.Builder()).hunger(12).saturationModifier(0.8F).statusEffect(new StatusEffectInstance(ModEffects.NOURISHMENT.get(), 3600, 0), 1F).build();
-
 }

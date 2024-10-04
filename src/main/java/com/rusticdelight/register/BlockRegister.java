@@ -24,7 +24,7 @@ public class BlockRegister {
     public static final Block BELL_PEPPER_YELLOW_CRATE = registerWithItem("bell_pepper_yellow_crate", new Block(Block.Settings.copy(Blocks.OAK_PLANKS).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD)));
     public static final Block BELL_PEPPER_SEEDS_BAG = registerWithItem("bell_pepper_seeds_bag", new Block(Block.Settings.copy(Blocks.WHITE_WOOL).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD)));
     public static final Block COTTON_SEEDS_BAG = registerWithItem("cotton_seeds_bag", new Block(Block.Settings.copy(Blocks.WHITE_WOOL).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD)));
-    public static final Block WILD_BELL_PEPPER = registerWithItem("wild_bell_peppers", new WildCropBlock(StatusEffects.FIRE_RESISTANCE, 10, Block.Settings.copy(Blocks.TALL_GRASS)));
+    public static final Block WILD_BELL_PEPPERS = registerWithItem("wild_bell_peppers", new WildCropBlock(StatusEffects.FIRE_RESISTANCE, 10, Block.Settings.copy(Blocks.TALL_GRASS)));
     public static final Block WILD_COTTON = registerWithItem("wild_cotton", new WildCropBlock(StatusEffects.HASTE, 12, Block.Settings.copy(Blocks.TALL_GRASS)));
 
     public static final Block COTTON = register("cotton", new CottonCorpBlock(Block.Settings.copy(Blocks.CARROTS).noCollision().nonOpaque()));
