@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class RusticDelight implements ModInitializer {
     public static final String MOD_ID = "rusticdelight";
-    public static final Identifier ROOT = new Identifier(MOD_ID, "root");
+    public static final Identifier ROOT = Identifier.of(MOD_ID, "root");
 
     /**
      * to skip namespace checking

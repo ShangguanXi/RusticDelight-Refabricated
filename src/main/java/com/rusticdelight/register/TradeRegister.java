@@ -9,16 +9,16 @@ import net.minecraft.village.VillagerProfession;
 
 public class TradeRegister {
 
-    public static TradeOffers.Factory sellForOneEmeraldTrade(ItemConvertible item, int count, int maxTrades, int xp) {
-        return new TradeOffers.BuyForOneEmeraldFactory(item, count, maxTrades, xp);
+    public static TradeOffers.Factory sellForOneEmeraldTrade(Item item, int count, int maxTrades, int xp) {
+        return new TradeOffers.BuyItemFactory(item, count, maxTrades, xp);
     }
 
-    public static TradeOffers.Factory buyTrade(ItemConvertible secondItem, int secondCount, int price, Item item, int sellCount, int maxTrades, int xp) {
-        return new TradeOffers.ProcessItemFactory(secondItem, secondCount, price, item, sellCount, maxTrades, xp);
+    public static TradeOffers.Factory buyTrade(ItemConvertible item, int count, int price, Item processed, int processedCount, int maxUses, int experience) {
+        return new TradeOffers.ProcessItemFactory( item,  count,  price,  processed,  processedCount,  maxUses,  experience,  0.25f);
     }
 
-    public static TradeOffers.Factory sellForEmeraldTrade(ItemConvertible item, int maxTrades, int xp) {
-        return new TradeOffers.SellItemFactory(new ItemStack(item), 1, 1, maxTrades, xp, 0.05F);
+    public static TradeOffers.Factory sellForEmeraldTrade(Item item, int maxTrades, int xp) {
+        return new TradeOffers.SellItemFactory(item, 1, 1, maxTrades, xp);
     }
 
     public static void initialize() {

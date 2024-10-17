@@ -60,7 +60,6 @@ public class ItemRegister {
 
     public static void initialize() {
         registerCompostables(ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE);
-        registerAnimalFeeds();
         /* 可以在访问加宽后让村民能捡乡村乐事的物品
         var newWantedItems = Sets.newHashSet(
                 BELL_PEPPER_GREEN,
@@ -89,22 +88,5 @@ public class ItemRegister {
         compostables.put(BlockRegister.WILD_BELL_PEPPERS, 0.65f);
     }
 
-    public static void registerAnimalFeeds() {
-        ChickenEntity.BREEDING_INGREDIENT = IngredientHelper.addAll(
-                ChickenEntity.BREEDING_INGREDIENT,
-                COTTON_SEEDS,
-                BELL_PEPPER_SEEDS
-        );
-        PigEntity.BREEDING_INGREDIENT = IngredientHelper.addAll(
-                PigEntity.BREEDING_INGREDIENT,
-                BELL_PEPPER_GREEN,
-                BELL_PEPPER_YELLOW,
-                BELL_PEPPER_RED
-        );
-        Collections.addAll(
-                ParrotEntity.TAMING_INGREDIENTS,
-                COTTON_SEEDS,
-                BELL_PEPPER_SEEDS
-        );
-    }
+
 }

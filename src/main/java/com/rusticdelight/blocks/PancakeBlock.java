@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -42,11 +43,11 @@ public class PancakeBlock extends Block {
     };
     public final int foodLevels;
     public final float saturation;
-    public final StatusEffect statusEffect;
+    public final RegistryEntry<StatusEffect> statusEffect;
     public final int time;
     public final int amplifier;
 
-    public PancakeBlock(Settings settings, int foodLevels, float saturation, StatusEffect statusEffect, int time, int amplifier) {
+    public PancakeBlock(Settings settings, int foodLevels, float saturation, RegistryEntry<StatusEffect> statusEffect, int time, int amplifier) {
         super(settings);
         this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(getServingsProperty(), 0));
         this.foodLevels = foodLevels;
@@ -75,18 +76,7 @@ public class PancakeBlock extends Block {
         // Forge那边没有调用getOpposite()
         return this.getDefaultState().with(FACING, context.getHorizontalPlayerFacing().getOpposite());
     }
-
-    @Override
-    public ActionResult onUse(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack heldStack = player.getStackInHand(hand);
-        if (level.isClient) {
-            if (this.consumeBite(level, pos, state, player).isAccepted()) {
-                return ActionResult.SUCCESS;
-            }
-            if (heldStack.isEmpty()) {
-                return ActionResult.CONSUME;
-            }
-        }
+    protected ActionResult onUse(BlockState state, World level, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         return this.consumeBite(level, pos, state, player);
     }
 
@@ -122,8 +112,8 @@ public class PancakeBlock extends Block {
         return true;
     }
 
-    @Override
-    public boolean canPathfindThrough(BlockState state, BlockView level, BlockPos pos, NavigationType type) {
+
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return false;
     }
 
