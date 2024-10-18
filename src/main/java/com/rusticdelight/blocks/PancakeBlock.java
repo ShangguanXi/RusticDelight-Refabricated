@@ -8,7 +8,6 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -17,7 +16,6 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -76,6 +74,8 @@ public class PancakeBlock extends Block {
         // Forge那边没有调用getOpposite()
         return this.getDefaultState().with(FACING, context.getHorizontalPlayerFacing().getOpposite());
     }
+
+    @Override
     protected ActionResult onUse(BlockState state, World level, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         return this.consumeBite(level, pos, state, player);
     }
@@ -112,7 +112,7 @@ public class PancakeBlock extends Block {
         return true;
     }
 
-
+    @Override
     protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return false;
     }

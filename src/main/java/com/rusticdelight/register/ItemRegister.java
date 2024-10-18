@@ -1,12 +1,8 @@
 package com.rusticdelight.register;
 
 import com.rusticdelight.items.RusticFoodComponents;
-import com.rusticdelight.util.IngredientHelper;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import net.minecraft.block.ComposterBlock;
-import net.minecraft.entity.passive.ChickenEntity;
-import net.minecraft.entity.passive.ParrotEntity;
-import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.item.AliasedBlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -14,10 +10,9 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import vectorwing.farmersdelight.common.item.DrinkableItem;
 
-import java.util.Collections;
-
 import static com.rusticdelight.RusticDelight.makeId;
 import static com.rusticdelight.register.ItemGroupRegister.RUSTIC_DELIGHT_GROUP;
+import static net.fabricmc.fabric.api.registry.VillagerInteractionRegistries.*;
 
 public class ItemRegister {
     public static final Item COTTON_BOLL = register("cotton_boll", new Item(new Item.Settings()));
@@ -59,34 +54,38 @@ public class ItemRegister {
     }
 
     public static void initialize() {
-        registerCompostables(ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE);
-        /* 可以在访问加宽后让村民能捡乡村乐事的物品
-        var newWantedItems = Sets.newHashSet(
-                BELL_PEPPER_GREEN,
-                BELL_PEPPER_YELLOW,
-                BELL_PEPPER_RED,
-                COTTON_BOLL,
-                BELL_PEPPER_SEEDS,
-                COTTON_SEEDS
-        );
-        newWantedItems.addAll(VillagerEntity.GATHERABLE_ITEMS);
-        VillagerEntity.GATHERABLE_ITEMS = ImmutableSet.copyOf(newWantedItems);*/
+        registerCompostableConfig(ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE);
+
+        // villager collectable
+        registerCollectable(BELL_PEPPER_GREEN);
+        registerCollectable(BELL_PEPPER_YELLOW);
+        registerCollectable(BELL_PEPPER_RED);
+        /*registerCollectable(COTTON_BOLL); 村民抢棉花不好吧*/
+        registerCollectable(BELL_PEPPER_SEEDS);
+        registerCollectable(COTTON_SEEDS);
+
+        // villager food
+        registerFood(BELL_PEPPER_GREEN, 1);
+        registerFood(BELL_PEPPER_YELLOW, 1);
+        registerFood(BELL_PEPPER_RED, 1);
+
+        // farmer compostable
+        registerCompostable(BELL_PEPPER_SEEDS);
+        registerCompostable(COTTON_SEEDS);
     }
 
-    public static void registerCompostables(Object2FloatMap<ItemConvertible> compostables) {
+    public static void registerCompostableConfig(Object2FloatMap<ItemConvertible> config) {
         // 30% chance
-        compostables.put(COTTON_SEEDS, 0.3f);
-        compostables.put(BELL_PEPPER_SEEDS, 0.3f);
+        config.put(COTTON_SEEDS, 0.3f);
+        config.put(BELL_PEPPER_SEEDS, 0.3f);
         // 50% chance
-        compostables.put(COTTON_BOLL, 0.5f);
-        compostables.put(POTATO_SLICES, 0.5f);
+        config.put(COTTON_BOLL, 0.5f);
+        config.put(POTATO_SLICES, 0.5f);
         // 65% chance
-        compostables.put(BELL_PEPPER_GREEN, 0.65f);
-        compostables.put(BELL_PEPPER_YELLOW, 0.65f);
-        compostables.put(BELL_PEPPER_RED, 0.65f);
-        compostables.put(BlockRegister.WILD_COTTON, 0.65f);
-        compostables.put(BlockRegister.WILD_BELL_PEPPERS, 0.65f);
+        config.put(BELL_PEPPER_GREEN, 0.65f);
+        config.put(BELL_PEPPER_YELLOW, 0.65f);
+        config.put(BELL_PEPPER_RED, 0.65f);
+        config.put(BlockRegister.WILD_COTTON, 0.65f);
+        config.put(BlockRegister.WILD_BELL_PEPPERS, 0.65f);
     }
-
-
 }
